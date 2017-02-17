@@ -27,6 +27,11 @@
 #############################################################################
 
 .onLoad <- function(libname, pkgname) {
+	if(rJava::.jniInitialized) {
+    		stop("XLConnect requires JVM memory settings. Please load this package first than any other packages connected with rJava.")
+  	} else {
+    		options(java.parameters = c("-Xmx512m", "-Dfile.encoding=UTF-8"))
+  	}	
 	# Load Java dependencies (all jars inside the java subfolder)
 	.jpackage(name = pkgname, jars = "*")
   
